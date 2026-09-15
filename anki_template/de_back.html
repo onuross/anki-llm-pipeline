@@ -1,0 +1,28 @@
+<div class="sentence-de">{{cloze:Sentence_German}}</div>
+
+<hr id="answer">
+
+<div class="word-container">
+    <div class="base-word" id="target-word">{{Base_Word}}</div>
+    <div class="meaning-text">{{Meaning}}</div>
+</div>
+
+<div class="translation-text">{{Translation}}</div>
+
+<script>
+  // Article Colorization Engine for German Nouns
+  setTimeout(function() {
+      var wordEl = document.getElementById('target-word');
+      
+      if(wordEl) {
+          var text = wordEl.innerHTML.trim(); 
+          
+          /* der: Deep Blue, die: Vivid Pink, das: Pastel Green */
+          text = text.replace(/^(der\s)/i, '<span style="color: #2563EB; text-shadow: 0 0 8px rgba(37, 99, 235, 0.6);">$1</span>'); 
+          text = text.replace(/^(die\s)/i, '<span style="color: #FF3366; text-shadow: 0 0 8px rgba(255, 51, 102, 0.4);">$1</span>'); 
+          text = text.replace(/^(das\s)/i, '<span style="color: #77DD77; text-shadow: 0 0 8px rgba(119, 221, 119, 0.4);">$1</span>'); 
+          
+          wordEl.innerHTML = text;
+      }
+  }, 0);
+</script>

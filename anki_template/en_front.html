@@ -1,0 +1,13 @@
+<div class="front-hint">{{Meaning}}</div>
+
+<div class="sentence-en">{{cloze:Sentence_English}}</div>
+
+<script>
+  // Magic script: Automatically hides the hint inside the cloze and replaces it with [...]
+  setTimeout(function() {
+      var clozeElements = document.querySelectorAll('.cloze');
+      clozeElements.forEach(function(el) {
+          el.innerHTML = '[...]';
+      });
+  }, 0);
+</script>

@@ -1,0 +1,41 @@
+Act as a highly intelligent, sharp C1 German expert, strict lexicographer, QA Inspector, and Expert Grammarian (think of a meticulous yet dynamic professional like Mike Ross).
+I am providing you with a JSON array of raw German words. 
+
+Your task is to ENRICH these words, strictly AUDIT them for technical, grammatical, and semantic perfection, and generate high-quality Anki flashcards tailored for a sharp IT Student/Professional focusing on Academic, Corporate, and vibrant Daily Life German.
+
+**RUTHLESS PRUNING & SPLITTING LOGIC (PARETO PRINCIPLE - 80/20):**
+1. DISCARD any archaic, hyper-specific, or useless dictionary meanings. Keep ONLY the highly frequent, vital meanings relevant to IT, business, academic, or daily C1 life.
+2. SPLIT the word into multiple rows IF the grammatical usage changes OR if it has completely distinct, highly relevant C1 meanings in different contexts. 
+3. DO NOT cram multiple meanings into a single card. ONE card = ONE specific context. No numbered lists (e.g., "1. X / 2. Y").
+
+**STRICT ENRICHMENT RULES (FOR 'base_word'):**
+1. Nouns: Add definite article and plural suffix (e.g., "das Haus, -¨er"). Mark n-deklination (e.g., "der Nachbar, -n, -n"). If a noun is singular-only or plural-only, mark it as (Sg.) or (Pl.) (e.g., "die Kosten (Pl.)", "der Hunger (Sg.)").
+2. Verbs: 
+   - Prepositional verbs in natural syntax (e.g., "sich für etwas (Akk.) interessieren").
+   - Reflexive verbs MUST include the correct "sich" (Akkusativ or Dativ) (e.g., "sich (Dat.) etwas merken").
+   - ALL VERBS (Regular/Irregular/Mixed): Write ONLY the infinitive + required reflexive/preposition + (hat/ist). DO NOT write 3rd person present, Präteritum, or the full Perfekt form. Examples: "sich (Akk.) vervielfältigen (hat)", "werfen (hat)", "gehen (ist)".
+   - Separable verbs: insert a bullet "•" (e.g., "ein•kaufen").
+   - For transitive/intransitive verbs needing a human object, use 'jdm.' (Dativ) or 'jdn.' (Akkusativ) without adding redundant case tags in parentheses. (e.g., "jdm. helfen", "jdn. anrufen").
+3. Adjectives: Include fixed prepositions naturally with their case (e.g., "stolz auf etwas (Akk.) sein", "angewiesen auf etwas (Akk.) sein").
+4. Register marking: If the word is colloquial/slang/umgangssprachlich/Vulgärsprache or formal/gehoben/schriftsprachlich/amtsprachlich, then it MUST be pointed out. 
+
+**NATIVE CLOZE FORMATTING & AUDIT CHECKLIST (CRITICAL):**
+1. Anti-Translation-Artifacts & Semantic Check: Is the phrasing genuinely used by native speakers? Fix any literal/unnatural translations from [BASE_LANGUAGE] immediately.
+2. Match the Register Perfectly (Highly Intellectual & Advanced Colloquial): Ban boring textbook sentences! Match the sentence style to the word's register. If the word is colloquial slang, write clever, natural daily-life dialogue or sharp office banter. If it is an IT/Academic word, write a sophisticated, persuasive professional sentence. Ensure the sentences sound effortlessly natural and witty.
+3. Cloze Format: The target word MUST be formatted as {{c1::GermanWord::[BASE_LANGUAGE]_Hint}}. The [BASE_LANGUAGE]_Hint must be short, direct, and context-specific. DO NOT use a generic dictionary translation if it causes confusion.
+4. Separable Verbs: If it separates, BOTH parts MUST be enclosed in the EXACT SAME c1 tag (e.g., Ich {{c1::gebe::spend}} Geld {{c1::aus}}). 
+5. No Bloat: The [BASE_LANGUAGE] translation ("Meaning" and "Translation") MUST perfectly and ONLY match the specific context of the generated German sentence. It must not contain alternative dictionary definitions.
+
+**OUTPUT FORMAT (STRICT CSV PIPE-DELIMITED):**
+Return ONLY pipe-delimited (|) text rows.
+Do NOT output JSON. Do NOT output a header row. Do NOT use markdown code blocks (no ```).
+Do NOT add extra line breaks inside the rows.
+Start your response directly with the first data row. No introductory text, no explanations.
+
+The exact columns must be:
+Sentence_German|Base_Word|Meaning|Translation
+
+**EXAMPLE OUTPUT (Assuming BASE_LANGUAGE is English):**
+Ehrlich gesagt, {{c1::gebe::spend}} ich jeden Monat viel zu viel Geld für unnötige Cloud-Dienste {{c1::aus}}, die ich kaum nutze.|aus•geben (hat)|to spend (money)|Honestly, I spend way too much money every month on unnecessary cloud services that I barely use.
+Mein {{c1::Nachbar::neighbor}} hat sich gestern über meinen lauten Serverlüfter beschwert, als ob er selbst nie Lärm machen würde.|der Nachbar, -n, -n|neighbor|My neighbor complained yesterday about my loud server fan, as if he never makes noise himself.
+Ehrlich gesagt, {{c1::widerspricht::contradicts}} sich der Chef in jedem verdammten Meeting selbst.|sich (Dat.) widersprechen (hat)|to contradict|Honestly, the boss is contradicting himself in every damn meeting.

@@ -1,0 +1,87 @@
+/* General Background and Typography */
+.card {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    font-size: 20px;
+    text-align: center;
+    color: #E2E8F0;
+    background-color: #0F172A; 
+    line-height: 1.6;
+    padding: 20px;
+}
+
+/* Top Hint Container */
+.front-hint {
+    font-size: 26px;
+    font-weight: 700;
+    color: #F59E0B; /* Amber - High visibility */
+    margin-bottom: 25px;
+    text-shadow: 0 0 10px rgba(245, 158, 11, 0.4);
+    border-bottom: 1px solid rgba(245, 158, 11, 0.2);
+    padding-bottom: 10px;
+    display: inline-block;
+}
+
+/* English Target Sentence */
+.sentence-en {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #F8FAFC;
+}
+
+/* English Cloze - Violet Theme */
+.cloze {
+    color: #A78BFA; 
+    background-color: rgba(167, 139, 250, 0.15);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 700;
+    box-shadow: 0 0 8px rgba(167, 139, 250, 0.2); 
+}
+
+/* English bold tags styling */
+.sentence-en b {
+    color: #A78BFA; 
+    background-color: rgba(167, 139, 250, 0.1);
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-weight: 600;
+}
+
+/* Divider */
+hr#answer {
+    border: none;
+    border-top: 2px dashed #475569;
+    margin: 30px auto;
+    width: 60%;
+}
+
+/* Base Word (Lemma) */
+.base-word {
+    font-size: 28px;
+    font-weight: 700;
+    color: #FBBF24; 
+    margin-bottom: 5px;
+    text-shadow: 0 0 8px rgba(251, 191, 36, 0.3); 
+}
+
+/* Context/Meaning */
+.meaning-text {
+    font-size: 20px;
+    font-style: italic;
+    color: #94A3B8;
+    margin-bottom: 25px;
+}
+
+/* Base Language Translation */
+.translation-text {
+    font-size: 16px;
+    color: #64748B;
+    background-color: #1E293B;
+    padding: 15px;
+    border-radius: 8px;
+    border-left: 4px solid #A78BFA; 
+    text-align: left;
+    max-width: 600px;
+    margin: 0 auto;
+}

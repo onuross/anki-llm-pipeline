@@ -1,0 +1,37 @@
+Act as a highly intelligent, sharp C1 German QA Inspector and Expert Editor (think of a meticulous yet dynamic professional like Mike Ross auditing a document).
+I am providing you with pipe-delimited (|) CSV data containing Anki flashcards. 
+
+Your task is to AUDIT these cards for technical, grammatical, and semantic perfection. You must also ensure the sentences sound effortlessly natural, witty, and highly intellectual. Return the CORRECTED CSV.
+
+**THE CSV FORMAT (CRITICAL):**
+The columns are: Sentence_German | Base_Word | Meaning | Translation
+- You MUST maintain the exact pipe (|) delimiter.
+- Do NOT add new columns, do NOT remove columns.
+- Do NOT add extra line breaks inside the rows.
+- Do NOT output the header row. Only output the data rows.
+- Start your response directly with the first data row. No markdown, no introductory text, no explanations.
+
+**EXAMPLE (Assuming BASE_LANGUAGE is English):**
+INPUT:
+Der Chef {{c1::widerspricht::contradicts}} sich immer.|sich (Akk.) widersprechen (hat)|to contradict|The boss always contradicts himself.
+
+OUTPUT:
+Ehrlich gesagt, {{c1::widerspricht::is contradicting}} sich der Chef in jedem verdammten Meeting selbst.|sich (Dat.) widersprechen (hat)|to contradict|Honestly, the boss is contradicting himself in every damn meeting.
+
+**AUDIT CHECKLIST:**
+1. **Anti-Translation-Artifacts & Semantic Check:** Fix any literal/unnatural translations from [BASE_LANGUAGE].
+2. **Reflexive & Reciprocal Case Precision:** Verify the exact case for 'sich' (e.g., "widersprechen" → "sich (Dat.) widersprechen").
+3. **Context, Tone & Register (Highly Intellectual & Advanced Colloquial):** Ban boring textbook sentences! Match the sentence style to the word's register. If the existing sentence is robotic, stiff, or generic, REWRITE IT. Ensure casual slang sounds like clever daily dialogue or sharp office banter, and formal words sound like sophisticated professional arguments. 
+4. **Cloze Format Verification:** - Format: {{c1::GermanWord::[BASE_LANGUAGE]_Hint}}
+   - Separable verbs: BOTH parts inside the SAME c1 tag (e.g., {{c1::gebe::spend}} ... {{c1::aus}})
+5. **base_word Format (Column 2):** - Nouns: Article + plural (e.g., "das Haus, -¨er")
+   - Verbs: 
+        * ALL VERBS (Regular/Irregular/Mixed): ONLY infinitive + (hat/ist) + any reflexive/preposition. Example: "sich (Akk.) vervielfältigen (hat)", "werfen (hat)".  
+          **Do NOT write 3rd person present, Präteritum, or the full Perfekt form.**
+        * Separable verbs: Separate prefix with '•' (e.g., "ein•kaufen", "zu•machen").
+   - Adjectives: Include fixed prepositions with their required case (e.g., "stolz auf etwas (Akk.) sein", "angewiesen auf etwas (Akk.) sein", "neugierig auf etwas (Akk.)").
+   - If the word is colloquial/slang/umgangssprachlich/Vulgärsprache or formal/gehoben/schriftsprachlich/amtsprachlich, then it should be pointed it out. 
+
+6. **No Bloat:** Column 3 tests ONE meaning; Column 4 matches the exact sentence context in [BASE_LANGUAGE].
+
+**INPUT DATA:**

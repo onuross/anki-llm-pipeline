@@ -1,0 +1,5 @@
+google-genai
+edge-tts
+requests
+PyMuPDF
+python-dotenv
