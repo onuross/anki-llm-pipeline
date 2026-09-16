@@ -14,7 +14,7 @@
 **The Solution:** An autonomous Data Engineering pipeline that extracts raw text, normalizes it via LLMs, and asynchronously injects high-quality, TTS-enabled cloze cards directly into Anki's local database.
 
 ## 🎓 Academic Context
-This project was developed by a 3rd-Semester Computer Science student at **HTW Dresden**. It serves as a practical application of Data Engineering, API integration, and Fault-Tolerant System Design concepts learned during the curriculum, specifically addressing rate-limiting constraints and automated I/O operations.
+This project was developed by a 2nd-Semester Computer Science student at **HTW Dresden**. It serves as a practical application of Data Engineering, API integration, and Fault-Tolerant System Design concepts learned during the curriculum, specifically addressing rate-limiting constraints and automated I/O operations.
 
 ## ⚙️ Tech Stack
 * **Language:** Python 3.10+
