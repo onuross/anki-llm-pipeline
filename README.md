@@ -1,9 +1,10 @@
 # 🧠 Anki-LLM-Pipeline: Automated Vocabulary Data Pipeline
 
-![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![Gemini API](https://img.shields.io/badge/Google-Gemini-blue?logo=google)
-![Anki](https://img.shields.io/badge/Integration-AnkiConnect-blue)
-![License](https://img.shields.io/badge/License-MIT-green.svg)
+![Python](https://img.shields.io/badge/Python-3.10%2B-3776AB?style=flat-square&logo=python&logoColor=white)
+![Gemini API](https://img.shields.io/badge/Google_Gemini-API-8E75B2?style=flat-square&logo=googlegemini&logoColor=white)
+![Anki](https://img.shields.io/badge/Anki-AnkiConnect-57A6D8?style=flat-square&logo=anki&logoColor=white)
+![License](https://img.shields.io/badge/License-MIT-2EA44F?style=flat-square&logo=opensourceinitiative&logoColor=white)
+
 
 <p align="center">
   <img src="assets/anki_demo.gif" alt="Anki Card Demo" width="600"/>
