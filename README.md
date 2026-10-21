@@ -1,7 +1,7 @@
 # 🧠 Anki-LLM-Pipeline: Automated Vocabulary Data Pipeline
 
 ![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)
-![Gemini API](https://img.shields.io/badge/AI-Google_Gemini-orange.svg)
+![Gemini API](https://img.shields.io/badge/Google-Gemini-blue?logo=google)
 ![Anki](https://img.shields.io/badge/Integration-AnkiConnect-blue)
 ![License](https://img.shields.io/badge/License-MIT-green.svg)
 
