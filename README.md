@@ -21,7 +21,7 @@ As a heavy Anki user, I wanted to automate the repetitive parts of that workflow
 
 ## ⚙️ Tech Stack
 * **Language:** Python 3.10+
-* **AI & NLP:** Google Gemini API (`gemini-3.6-flash`, `gemini-3.1-flash-lite`)
+* **AI & NLP:** Google Gemini API (`gemini-3.8-flash`, `gemini-3.6-flash`, `(Web) Gemini Pro 3.1 High`)
 * **Data Extraction:** PyMuPDF (fitz)
 * **Media & Database:** Edge-TTS, AnkiConnect (Local REST API)
 * **Anki Card UI:** HTML, CSS, Vanilla JavaScript (Regex-based DOM manipulation)
@@ -31,10 +31,10 @@ As a heavy Anki user, I wanted to automate the repetitive parts of that workflow
 
 The initial goal was to automate the entire workflow end-to-end. During development, however, I found that fully automating every language required more capable models and substantially higher API usage than was practical for my use case. A strategic **Hybrid Architecture (Human-in-the-Loop)** was therefore adopted.
 
-| Pipeline | Target Language | Model | Automation Level | Why |
+| Pipeline | Target Language | Model | Automation Level | Rationale |
 | :--- | :--- | :--- | :--- | :--- |
-| **English** | English | `Gemini 3.6 Flash (API)` | 100% Autonomous | Reliable enough for fully automated batch generation in my workflow. |
-| **German** | German | `Gemini Pro (via Web)` | Hybrid | German grammar (gendered articles, case declensions) benefits from stronger model reasoning and additional review to reduce subtle errors in Cloze cards. |
+| **English** | English | `Gemini 3.8 Flash (API)` | 100% Autonomous | Reliable enough for fully automated batch generation in my workflow. |
+| **German** | German | `Gemini 3.6 Flash (API)` + `Gemini Pro (via Web)` | Hybrid | Combines automated daily API batches with Pro review & fallback, since German grammar (gendered articles, case declensions) benefits from stronger model reasoning and additional review to reduce subtle errors in Cloze cards. |
 
 > *Core Engineering Philosophy: **Data Quality & Accuracy > Blind Full-Automation.***
 
@@ -42,15 +42,16 @@ The initial goal was to automate the entire workflow end-to-end. During developm
 graph TD
   A[Raw PDF Data] -->|ETL Scripts| B(Normalized Master List)
   B --> C{Agent Part 1}
-  C -->|"API Success (English)"| D[Daily Output CSV]
-  C -->|"Rate Limit / Pro Demand (German)"| E[Manual Pro Fallback TXT]
+  C -->|"Automated API Batches (EN & DE)"| D[Daily Output CSV]
+  C -->|"Hybrid Review & Fallback (DE)"| E[Manual Pro TXT Files]
   D --> F{Agent Part 2}
   E -->|"Manual Ingestion via Web LLM"| F
   F -->|"TTS Generation & REST API"| G[(Anki Local Database)]
-  ```
+```
 
 ### 🛡️ Engineering Highlights
 
+* **Multi-Model Quota Isolation:** Distributes language pipelines across distinct model endpoints (`gemini-3.6-flash` for German, `gemini-3.8-flash` for English) to double daily Request capacity and prevent `RESOURCE_EXHAUSTED` bottlenecks.  
 * **Exponential Backoff:** The system dynamically doubles wait times upon encountering API rate limits (429 errors), preventing server overload.
 * **Stateful Processing:** Data queues are updated only after successful processing, allowing interrupted runs and failed API calls to resume without re-processing completed entries.
 
@@ -168,7 +169,7 @@ Create the configuration file `com.user.ankibot.plist` in `~/Library/LaunchAgent
 Load and start the daemon with:
 
 ```bash
-launchctl load ~/Library/LaunchAgents/com.user.ankibot.plist
+launchctl load -w ~/Library/LaunchAgents/com.user.ankibot.plist
 ```
 
 
