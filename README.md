@@ -10,7 +10,7 @@
   <img src="assets/anki_demo.gif" alt="Anki Card Demo" width="600"/>
 </p>
 
-## 💡 Project Motivation
+## Project Motivation
 
 This project started from a personal frustration with building and maintaining Anki cards with web-based LLMs.
 As a heavy Anki user, I wanted to automate the repetitive parts of that workflow without giving up control over the final data.
@@ -27,7 +27,7 @@ As a heavy Anki user, I wanted to automate the repetitive parts of that workflow
 * **Anki Card UI:** HTML, CSS, Vanilla JavaScript (Regex-based DOM manipulation)
 
   
-## 📐 System Design & Trade-offs
+## System Design & Trade-offs
 
 The initial goal was to automate the entire workflow end-to-end. During development, however, I found that fully automating every language required more capable models and substantially higher API usage than was practical for my use case. A strategic **Hybrid Architecture (Human-in-the-Loop)** was therefore adopted.
 
@@ -36,7 +36,7 @@ The initial goal was to automate the entire workflow end-to-end. During developm
 | **English** | English | `Gemini 3.8 Flash (API)` | 100% Autonomous | Reliable enough for fully automated batch generation in my workflow. |
 | **German** | German | `Gemini 3.6 Flash (API)` + `Gemini Pro (via Web)` | Hybrid | Combines automated daily API batches with Pro review & fallback, since German grammar (gendered articles, case declensions) benefits from stronger model reasoning and additional review to reduce subtle errors in Cloze cards. |
 
-> *Core Engineering Philosophy: **Data Quality & Accuracy > Blind Full-Automation.***
+> **Data Quality & Accuracy > Blind Full-Automation.***
 
 ```mermaid
 graph TD
@@ -49,7 +49,7 @@ graph TD
   F -->|"TTS Generation & REST API"| G[(Anki Local Database)]
 ```
 
-### 🛡️ Reliability & Fault Tolerance
+### Reliability & Fault Tolerance
 
 * **Multi-Model Quota Isolation:** Distributes language pipelines across distinct model endpoints (`gemini-3.6-flash` for German, `gemini-3.8-flash` for English) to double daily Request capacity and prevent `RESOURCE_EXHAUSTED` bottlenecks.  
 * **Exponential Backoff:** The system dynamically doubles wait times upon encountering API rate limits (429 errors), preventing server overload.
@@ -104,7 +104,7 @@ python src/part_1.py
 python src/part_2.py
 ```
 
-## ⚡ Automation & Daily Workflow (Cron & Aliases)
+## Automation & Daily Workflow (Cron & Aliases)
 
 The pipeline decouples resource-heavy generation from database synchronization, enabling scheduled background processing alongside on-demand injection:
 
