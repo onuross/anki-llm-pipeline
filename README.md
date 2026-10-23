@@ -27,7 +27,7 @@ As a heavy Anki user, I wanted to automate the repetitive parts of that workflow
 * **Anki Card UI:** HTML, CSS, Vanilla JavaScript (Regex-based DOM manipulation)
 
   
-## 📐 Architectural Decisions & Pragmatic Trade-offs
+## 📐 System Design & Trade-offs
 
 The initial goal was to automate the entire workflow end-to-end. During development, however, I found that fully automating every language required more capable models and substantially higher API usage than was practical for my use case. A strategic **Hybrid Architecture (Human-in-the-Loop)** was therefore adopted.
 
@@ -49,7 +49,7 @@ graph TD
   F -->|"TTS Generation & REST API"| G[(Anki Local Database)]
 ```
 
-### 🛡️ Engineering Highlights
+### 🛡️ Reliability & Fault Tolerance
 
 * **Multi-Model Quota Isolation:** Distributes language pipelines across distinct model endpoints (`gemini-3.6-flash` for German, `gemini-3.8-flash` for English) to double daily Request capacity and prevent `RESOURCE_EXHAUSTED` bottlenecks.  
 * **Exponential Backoff:** The system dynamically doubles wait times upon encountering API rate limits (429 errors), preventing server overload.
