@@ -18,8 +18,6 @@ GOOGLE_API_KEY = os.getenv("GEMINI_API_KEY")
 if not GOOGLE_API_KEY:
     raise ValueError("CRITICAL: GEMINI_API_KEY is not set in the .env file.")
 
-MODEL_ID = "gemini-3.6-flash"
-
 # ==============================================================================
 # 1. DYNAMIC PATHS (Portability)
 # ==============================================================================
@@ -42,11 +40,12 @@ logging.basicConfig(
 )
 
 # ==============================================================================
-# 2. CONFIGURATIONS (i18n Supported)
+# 2. CONFIGURATIONS (i18n & Multi-Model Load Balancing Supported)
 # ==============================================================================
 
 GERMAN_CONFIG = {
     "language": "German",
+    "model_id": "gemini-3.6-flash",  # Dedicated model pool for German
     "base_language": "Turkish",  # i18n: Can be changed to "Spanish", "English", etc.
     "txt_path": DATA_DIR / "txt" / "de_example.txt",
     "csv_path": DATA_DIR / "csv" / "de_example.csv",
@@ -64,6 +63,7 @@ GERMAN_CONFIG = {
 
 ENGLISH_CONFIG = {
     "language": "English",
+    "model_id": "gemini-3.8-flash",  # Dedicated model pool for English (Quota Isolation)
     "base_language": "Turkish",  # i18n: Can be changed to "Spanish", "German", etc.
     "txt_path": DATA_DIR / "txt" / "en_example.txt",
     "csv_path": DATA_DIR / "csv" / "en_example.csv",
@@ -184,7 +184,8 @@ def process_language_batch(client, config, sys_prompt, qa_prompt):
     """Handles the end-to-end automated generation and QA for a specific language."""
     lang = config["language"]
     base_lang = config["base_language"]
-    logging.info(f"\n🌍 --- {lang.upper()} PART 1 STARTED ---")
+    model_id = config["model_id"]
+    logging.info(f"\n🌍 --- {lang.upper()} PART 1 STARTED (Model: {model_id}) ---")
 
     # Dynamic i18n Prompt Injection
     dynamic_sys_prompt = sys_prompt.replace("[BASE_LANGUAGE]", base_lang)
@@ -210,10 +211,10 @@ def process_language_batch(client, config, sys_prompt, qa_prompt):
         batch_no = (total_processed // config["batch_size"]) + 1
         logging.info(f"\n📦 {lang} Batch {batch_no}: {batch_words}")
 
-        # Phase 1: Production (Generation) with dynamic prompt
+        # Phase 1: Production (Generation) with dynamic prompt & language-specific model
         gen_response = safe_api_call(
             client,
-            MODEL_ID,
+            model_id,
             f"{dynamic_sys_prompt}\n\nUSER INPUT: {json.dumps(batch_words)}",
         )
         generated_json = (
@@ -226,10 +227,10 @@ def process_language_batch(client, config, sys_prompt, qa_prompt):
             )
             break
 
-        # Phase 2: QA (Quality Assurance) with dynamic prompt
+        # Phase 2: QA (Quality Assurance) with dynamic prompt & language-specific model
         qa_input = json.dumps(generated_json, ensure_ascii=False)
         qa_response = safe_api_call(
-            client, MODEL_ID, f"{dynamic_qa_prompt}\n\nRAW CARDS:\n{qa_input}"
+            client, model_id, f"{dynamic_qa_prompt}\n\nRAW CARDS:\n{qa_input}"
         )
         final_json = (
             extract_json_from_response(qa_response.text) if qa_response else None
@@ -302,6 +303,9 @@ def generate_pro_model_request_file(config):
         f"📦 Extracting {pro_limit} words for {config['language']} Pro Model Fallback..."
     )
     pro_words, remaining_words = extract_words_from_txt(config["txt_path"], pro_limit)
+
+    # Log extracted words to prevent data loss on file overwrites
+    logging.info(f"🔍 Extracted Pro Words: {pro_words}")
 
     if not pro_words:
         logging.warning(
